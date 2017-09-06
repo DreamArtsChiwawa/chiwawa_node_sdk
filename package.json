@@ -1,0 +1,22 @@
+{
+  "name": "chiwawa_node_sdk",
+  "version": "0.0.3",
+  "description": "Node.js SDK for Chiwawa API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "Chiwawa",
+    "SDK",
+    "API"
+  ],
+  "author": "DreamArts Corporation.",
+  "license": "DreamArts All Rights Reserved.",
+  "dependencies": {
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.5.0"
+  }
+}
