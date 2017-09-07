@@ -1,10 +1,11 @@
 {
   "name": "chiwawa_node_sdk",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Node.js SDK for Chiwawa API.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "publish": "./build_settings/Publish.sh 0.0.5"
   },
   "keywords": [
     "Chiwawa",
