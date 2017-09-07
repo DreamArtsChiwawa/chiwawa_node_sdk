@@ -1,11 +1,15 @@
 {
   "name": "chiwawa_node_sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Node.js SDK for Chiwawa API.",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "deploy": "./build_settings/Publish.sh 0.1.1"
+    "deploy": "./build_settings/Publish.sh 0.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DreamArtsChiwawa/chiwawa_node_sdk.git"
   },
   "keywords": [
     "Chiwawa",
