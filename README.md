@@ -2,7 +2,7 @@
 知話輪の公開APIをNode.jsから簡単に使えるようにするためのSDKです。
 
 ## はじめに
-知話輪の概要、および、APIの仕様やチュートリアルについては、下記を参照してください。なお、知話輪のAPIは一般的なREST APIであるため、このSDKを用いなくても使うことができ、かつ、他の開発言語でも利用可能です。
+知話輪の概要、および、APIの仕様やチュートリアルについては、下記を参照してください。なお、知話輪のAPIは一般的なREST APIであるため、このSDKを用いなくても使うことができ、かつ、他の開発言語でも利用可能です。
 
 - [知話輪とは](https://www.chiwawa.one/)
 - [知話輪APIドキュメント](https://developers.chiwawa.one/api/index.html)
@@ -22,7 +22,7 @@ npm install chiwawa_node_sdk --save
 | CHIWAWA_VALIDATION_TOKEN | 知話輪のWebhook検証トークン |
 
 ## 基本的な利用方法
-SDKを呼びだす。
+SDKを呼びだす。
 ```.js
 const ChiwawaService = require("chiwawa_node_sdk");
 ```
