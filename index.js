@@ -35,7 +35,10 @@ const ChiwawaService = {
         }
         return true;
     },
-    /** リクエストから企業IDを取得 */
+    /** リクエストから企業IDを取得
+     * @param req リクエストオブジェクト
+     * @return リクエストにセットされた企業IDを取得する。取得できない場合は""を返す。
+     */
     getCompanyId: function(req) {
         if (req && req.body) {
             return req.body.companyId || "";
@@ -43,7 +46,10 @@ const ChiwawaService = {
             return "";
         }
     },
-    /** リクエストからグループIDを取得 */
+    /** リクエストからグループIDを取得
+     * @param req リクエストオブジェクト
+     * @return リクエストにセットされたグループIDを取得する。取得できない場合は""を返す。
+     */
     getGroupId: function(req) {
         if (req && req.body && req.body.message) {
             return req.body.message.groupId || "";
@@ -51,7 +57,10 @@ const ChiwawaService = {
             return "";
         }
     },
-    /** リクエストからメッセージの本文を取得 */
+    /** リクエストからメッセージの本文を取得
+     * @param req リクエストオブジェクト
+     * @return リクエストにセットされたメッセージの本文を取得する。取得できない場合は""を返す。
+     */
     getMessageText: function(req) {
         if (req && req.body && req.body.message) {
             return req.body.message.text || "";
@@ -68,12 +77,24 @@ const ChiwawaService = {
     sendMessageRawData: function(req, messageData, callback, azureContext) {
         ChiwawaService.privateMethods.sendMessage(ChiwawaService.getCompanyId(req), ChiwawaService.getGroupId(req), messageData, callback, azureContext);
     },
+    /** 送信用のメッセージデータを組み立てるユーティリティ */
     MessageDataBuilder: {
+        /** テキストメッセージのオブジェクトを作成
+         * @param messageText メッセージ本文
+         * @return テキストメッセージのオブジェクト
+         */
         newMessageDataWithText: function(messageText) {
             return {
                 text: messageText || "",
             }
         },
+        /** テキストメッセージとテキストアタッチメントのオブジェクトを作成
+         * @param messageText　メッセージ本文
+         * @param attachmentTitle　テキストアタッチメントのタイトル
+         * @param attachmentText　テキストアタッチメントの本文
+         * @param textType　テキストアタッチメントの本文の形式。none: プレーンテキスト、hmtl: HTML形式、md：Markdown形式
+         * @return テキストメッセージとテキストアタッチメントのオブジェクト
+         */
         newMessageDataWithTextAttachment: function(messageText, attachmentTitle, attachmentText, textType) {
             const textAttachment = ChiwawaService.MessageDataBuilder.newTextAttachment(attachmentTitle, attachmentText, textType);
             return {
@@ -81,14 +102,30 @@ const ChiwawaService = {
                 attachments: [textAttachment]
             };
         },
+        /** テキストメッセージと複数のテキストアタッチメントのオブジェクトを作成
+         * @param messageText　メッセージ本文
+         * @param attachments　アタッチメントオブジェクトを配列で指定
+         * @return テキストメッセージと複数のテキストアタッチメントのオブジェクト
+         */
         newMessageDataWithAttachments: function(messageText, attachments) {
             return {
                 text: messageText || "",
                 attachments: attachments
             };
         },
+        /** テキストアタッチメントのオブジェクトを作成
+         * @param attachmentTitle　タイトル
+         * @param attachmentText　本文
+         * @param textType　本文の形式。none: プレーンテキスト、hmtl: HTML形式、md：Markdown形式
+         * @param color　左下に表示するラベルの色。cssの色指定と同様16進数の文字列を指定する。例：「#ff0000」
+         * @param tagIcons　タグアイコンの名称を配列で指定。複数指定可。アイコン名称はAPIドキュメント参照
+         * @param displaysCommentField　コメント欄を表示するか否か。yes: コメント入力欄を表示する。no: コメント入力欄を表示しない。
+         * @param actions　アクションオブジェクトを配列で指定。
+         * @return テキストアタッチメントのオブジェクト
+         */
         newTextAttachment: function(attachmentTitle, attachmentText, textType, color, tagIcons, displaysCommentField, actions) {
             return {
+                attachmentId: "id" + new Date().getTime(),
                 viewType: "text",
                 title: attachmentTitle || "",
                 text: attachmentText || "",
@@ -98,8 +135,30 @@ const ChiwawaService = {
                 displaysCommentField: displaysCommentField || "no",
                 actions: actions || []
             };
+        },
+        /** テキストアタッチメントにセットするアクションオブジェクトを生成
+         * @param buttonTitle　ボタンタイトル
+         * @param localizedTitle　言語別のボタンタイトル。{"ISO言語コード": "当該言語のボタン名称"}の形式で指定
+         * @param displaysIn　ボタンの表示場所。timeline: タイムラインに表示、detail: 詳細画面に表示、both: 両方（デフォルト）
+         * @param actionUrl　ボタンが押された際にリクエストを飛ばす先のURL。placeholderについてはAPIドキュメント参照。
+         * @param actionType　ボタンを押下した時の動作種別。detail: 詳細画面を開く、inAppBrowser: アプリ内ブラウザで開く、externalApp: 外部アプリで開く、get: HTTP GETリクエストを送信、post: POSTリクエストを送信
+         * @param postBody　actionUrlにpostする内容。
+         * @param postBodyContentType　postBodyのコンテントタイプ。json: JSON形式（デフォルト）、form: フォーム形式
+         * @return アクションオブジェクト（テキストアタッチメントに表示するボタンとその挙動を指定したもの）
+         */
+        newTextAttachmentAction: function(buttonTitle, localizedTitle, displaysIn, actionUrl, actionType, postBody, postBodyContentType) {
+            return {
+                buttonTitle: buttonTitle || "",
+                localizedTitle: localizedTitle || {},
+                displaysIn: displaysIn || "both",
+                actionUrl: actionUrl || "",
+                actionType: actionType || "",
+                postBody: postBody || {},
+                postBodyContentType: postBodyContentType || "json"
+            }
         }
     },
+    /** 以下はプライベートメソッドのため、直接呼び出さないようにしてください。 */
     privateMethods: {
         isAuthorized: function(req) {
             if (req && req.headers) {
