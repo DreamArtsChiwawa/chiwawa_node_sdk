@@ -1,6 +1,6 @@
 {
   "name": "chiwawa_node_sdk",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Node.js SDK for Chiwawa API.",
   "main": "index.js",
   "scripts": {
