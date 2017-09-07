@@ -2,14 +2,9 @@ var assert = require("assert")
 const ChiwawaService = require('../index');
 
 const VALIDATION_TOKEN = "TEST_TOKEN";
-// const API_TOKEN = "YOUR_API_TOKEN";
-// const TEST_COMPANY_ID = "YOURC|_COMPANY_ID";
-// const TEST_GROUP_ID = "YOUR_GROUP_ID";
-
-const API_TOKEN = "502163ce8ef7ba756f4f261c2ff4d942";
-const TEST_COMPANY_ID = "staging-3f202538-fccf-4f9a-8b1c-5516";
-const TEST_GROUP_ID = "-KWGbhXzcbPBBSPS3R_j";
-
+const API_TOKEN = "YOUR_API_TOKEN";
+const TEST_COMPANY_ID = "YOURC|_COMPANY_ID";
+const TEST_GROUP_ID = "YOUR_GROUP_ID";
 
 process.env["CHIWAWA_VALIDATION_TOKEN"] = VALIDATION_TOKEN;
 process.env["CHIWAWA_API_TOKEN"] = API_TOKEN;
