@@ -74,22 +74,21 @@ ChiwawaService.sendMessageRawData(req, content, function(err, httpResponse, body
 
 知話輪にアクションボタン付きのテキストアタッチメントを送信する。
 ```.js
-      // アクションボタンを作成
-      const postAction = ChiwawaService.MessageDataBuilder.newTextAttachmentAction("POSTボタン", null, "detail", "https://YOUR_APP_DOMAIN", "post", {}, "json");
-      // attachmentにアクションボタンをセット
-      const attachment = ChiwawaService.MessageDataBuilder.newTextAttachment("アタッチメントタイトル", "# 見出し1\n## 見出し2\n### 見出し3\n- 箇条書き1\n- 箇条書き2\n- 箇条書き3\n\n|タイトル1|タイトル2|\n|---|---|\n|中身1|中身2|", "md", "#ff0000", ["lock", "check"], "yes", [postAction]);
-      // 上記で作成したattachmentをセット（attachmentは配列で複数指定可）
-      const content = ChiwawaService.MessageDataBuilder.newMessageDataWithAttachments("テキストアタッチメントを送信（アクションの指定）", [attachment]);
-      // メッセージを送信
-      ChiwawaService.sendMessageRawData(getRequest(), content, function(err, httpResponse, body) {
-        if (err) {
-          assert.fail(err);
-        } else {
-          assert.equal(httpResponse.statusCode, 200);
-        }
-        done();
-      });
-
+// アクションボタンを作成
+const postAction = ChiwawaService.MessageDataBuilder.newTextAttachmentAction("POSTボタン", null, "detail", "https://YOUR_APP_DOMAIN", "post", {}, "json");
+// attachmentにアクションボタンをセット
+const attachment = ChiwawaService.MessageDataBuilder.newTextAttachment("アタッチメントタイトル", "# 見出し1\n## 見出し2\n### 見出し3\n- 箇条書き1\n- 箇条書き2\n- 箇条書き3\n\n|タイトル1|タイトル2|\n|---|---|\n|中身1|中身2|", "md", "#ff0000", ["lock", "check"], "yes", [postAction]);
+// 上記で作成したattachmentをセット（attachmentは配列で複数指定可）
+const content = ChiwawaService.MessageDataBuilder.newMessageDataWithAttachments("テキストアタッチメントを送信（アクションの指定）", [attachment]);
+// メッセージを送信
+ChiwawaService.sendMessageRawData(getRequest(), content, function(err, httpResponse, body) {
+  if (err) {
+    assert.fail(err);
+  } else {
+    assert.equal(httpResponse.statusCode, 200);
+  }
+  done();
+});
 ```
 
 ## 次のステップ
